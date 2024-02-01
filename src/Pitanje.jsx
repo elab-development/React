@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PonudjenOdgovor from './PonudjenOdgovor';
 import Rezultat from './Rezultat';
@@ -6,9 +6,17 @@ import Rezultat from './Rezultat';
 const Pitanje = ({ pitanja }) => {
   const { id } = useParams();
 
-  const trenutnoPitanje = pitanja.find(pitanje => pitanje.id === Number(id));
+  const trenutnoPitanje = pitanja.find((pitanje) => pitanje.id === Number(id));
   const [odgovorKorisnika, setOdgovorKorisnika] = useState(null);
 
+  useEffect(() => {
+    setOdgovorKorisnika(null);
+  }, [id]);
+
+  const [odabraniOdgovor, setOdabraniOdgovor] = useState(null);
+
+  
+  
   if (!trenutnoPitanje) {
     return <div>Pitanje nije pronađeno.</div>;
   }
@@ -23,10 +31,14 @@ const Pitanje = ({ pitanja }) => {
       <div className="odgovori">
         {opcije.map((odgovor, index) => (
           <PonudjenOdgovor 
-          key={index}
-          odgovor={odgovor} 
+          
+          key={odgovor}
+          odgovor={odgovor}
           tacanOdgovor={tacanOdgovor}
           setOdgovorKorisnika={setOdgovorKorisnika}
+          id={id}
+          odabraniOdgovor={odabraniOdgovor}
+          setOdabraniOdgovor={setOdabraniOdgovor}
         />
         ))}
       </div>
