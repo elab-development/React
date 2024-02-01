@@ -18,6 +18,7 @@ const Pitanje = ({ pitanja, setSkor }) => {
 
   
   
+  
   if (!trenutnoPitanje) {
     return <div>Pitanje nije pronađeno.</div>;
   }
@@ -42,6 +43,9 @@ const Pitanje = ({ pitanja, setSkor }) => {
   if (odgovorKorisnika === tacanOdgovor) {     
     var currentScore = window.sessionStorage.getItem("score");
     var newScore = Number(currentScore)+0.5;
+
+    
+    
     window.sessionStorage.setItem("score",newScore);
 }
 
