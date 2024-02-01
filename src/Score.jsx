@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-function Score() {
-  const [scores, setScore] = useState([]);
+function Score({scores,setScores}) {
   const [prikaziPrompt, setPrikaziPrompt] = useState(true);
   const [promptPrikazan, setPromptPrikazan] = useState(false);
 
 
   const handleUnesiNadimak = (score) => {
     const nadimak = window.sessionStorage.getItem("nadimak")
-    if( !nadimak){
+    if( !nadimak || nadimak=="null"){
         const nadimak = window.prompt('Unesite svoj nadimak:');
         window.sessionStorage.setItem("nadimak",nadimak)
     }
@@ -19,9 +19,13 @@ function Score() {
         nadimak,
         score,
       };
-      setScore((prevScore) => [...prevScore, noviScore]);
+      setScores((prevScore) => [...prevScore, noviScore]);
     }
   };
+
+  function handleClick(){
+    window.sessionStorage.clear();
+  }
 
   useEffect(() => {
     if (prikaziPrompt && !promptPrikazan) {
@@ -36,6 +40,7 @@ function Score() {
 
   const renderTabelaRezultata = () => {
     return (
+        <div className="pocetna">
       <table>
         <thead>
           <tr>
@@ -54,6 +59,10 @@ function Score() {
           ))}
         </tbody>
       </table>
+      <Link to="/kviz/1" className="pocetna-dugme" onClick={handleClick}>
+            POČNI KVIZ
+          </Link>
+        </div>
     );
   };
 

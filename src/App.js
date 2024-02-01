@@ -39,7 +39,11 @@ function App() {
     }
   ]);
 
+  window.sessionStorage.clear();
   window.sessionStorage.setItem("score","0");
+
+
+  const [scores, setScores] = useState([]);
 
   return (
     <BrowserRouter>
@@ -47,7 +51,7 @@ function App() {
      <Routes>
          <Route path='/' element={ <Pocetna></Pocetna>}></Route>
          <Route path='/kviz/:id' element={ <Pitanje pitanja={kvizPitanja} ></Pitanje>}></Route>
-         <Route path='/kraj' element={ <Score ></Score>}></Route>
+         <Route path='/kraj' element={ <Score  scores={scores} setScores={setScores}></Score>}></Route>
 
 
      </Routes>
