@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PonudjenOdgovor from './PonudjenOdgovor';
+import Rezultat from './Rezultat';
 
 const Pitanje = ({ pitanja }) => {
   const { id } = useParams();
-    console.log(id)
+
   const trenutnoPitanje = pitanja.find(pitanje => pitanje.id === Number(id));
+  const [odgovorKorisnika, setOdgovorKorisnika] = useState(null);
 
   if (!trenutnoPitanje) {
     return <div>Pitanje nije pronađeno.</div>;
   }
 
-  const { pitanje, opcije } = trenutnoPitanje;
+  const { pitanje, opcije, tacanOdgovor } = trenutnoPitanje;
 
   return (
     <div className="pitanje-container">
@@ -20,9 +22,15 @@ const Pitanje = ({ pitanja }) => {
       </div>
       <div className="odgovori">
         {opcije.map((odgovor, index) => (
-          <PonudjenOdgovor odgovor={odgovor}> </PonudjenOdgovor>
+          <PonudjenOdgovor 
+          key={index}
+          odgovor={odgovor} 
+          tacanOdgovor={tacanOdgovor}
+          setOdgovorKorisnika={setOdgovorKorisnika}
+        />
         ))}
       </div>
+      {odgovorKorisnika !== null && <Rezultat isCorrect={odgovorKorisnika === tacanOdgovor} />}
     </div>
   );
 };
